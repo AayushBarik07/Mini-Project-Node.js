@@ -87,11 +87,11 @@ app.post('/register', async (req, res) => {
         name, 
         email
       });
+      let token = jwt.sign({ email: user.email, userid: user._id }, 'secret');
+      res.cookie('token', token);
+      res.send("registered.");
     });
   });
-  let token = jwt.sign({ email: user.email, userid: user._id }, 'secret');
-  res.cookie('token', token);
-  res.send("registered.");
 });
 
 
