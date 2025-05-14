@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 p-10 text-white font-sans">
+  <a href="/profile" class="bg-blue-600 hover:bg-red-700 text-white px-4 py-2 min-h-screen rounded-md transition">
+    Back to Profile
+  </a>
+  <div class="min-h-screen flex flex-col items-center">
+    <!-- Header -->
+    <div class="w-full max-w-4xl flex justify-between items-center p-10 mb-10">
+      <h2 class="text-4xl sm:text-5xl font-bold">
+        <span class="font-bold align-start text-gray-300">Edit Profile.
+      </h2>
+    </div>
+    
+    <!--Edit Post -->
+    <div class="w-full max-w-2xl bg-zinc-800 p-8 rounded-xl shadow-lg">
+      <h4 class="text-2xl font-semibold mb-4">Write a new post. ✏️</h4>
+      <form method="post" action="/update/<%= post._id %>" class="flex flex-col gap-4">
+        <textarea
+          name="content"
+          placeholder="What's on your mind?"
+          class="w-full h-40 p-4 rounded-lg bg-zinc-900 border border-zinc-700 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none">
+          <%= post.content %>
+        </textarea>
+        <input
+          type="submit"
+          value="Update Post"
+          class="self-end bg-yellow-500 hover:bg-orange-700 text-white px-6 py-2 rounded-lg cursor-pointer transition"
+        />
+      </form>
+    </div>
+  </div>
+</body>
+</html>
