@@ -9,10 +9,11 @@ const crypto = require('crypto');
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs'); 
+const multerConfig = require('./config/multerConfig');
 
 app.set("view engine", "ejs");
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -34,9 +35,6 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/test', (req, res) => {
-  res.render('test');
-});
 
 app.post('/upload', upload.single('file'), (req, res) => {
   console.log(req.file);
@@ -45,6 +43,22 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login');
+});
+
+app.get('/uploadProfile', (req, res) => {
+  res.render('uploadProfile');
+});
+
+app.get('profile/uploadProfile', (req, res) => {
+  res.render("uploadProfile");
+});
+
+app.post('/uploadProfile', authenticateToken, upload.single('file'), async (req, res) => {
+  let user = await userModel.findOne({ email: req.user.email });
+  user.profilePic = req.file.filename;
+  await user.save();
+  res.redirect('/profile');
+  // console.log(req.file);
 });
 
 app.get('/profile', authenticateToken, async (req, res) => {
